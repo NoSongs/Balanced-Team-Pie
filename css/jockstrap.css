@@ -187,6 +187,12 @@ body {
   zoom: 1;
 }
 
+.container-small {
+  width: 600px;
+  margin: 20px auto;
+  zoom: 1;
+}
+
 .home {
   margin: 60px 0 0 0;
 }
@@ -204,6 +210,33 @@ body {
   font-family: Georgia, serif;
   font-style: italic;
   font-size: 18px;
+}
+
+.team-select {
+  display: block;
+  height: 156px;
+  width: 156px;
+  float: left;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  background-color: #eaeaea;
+  background-repeat: repeat-x;
+  background-image: -khtml-gradient(linear, left top, left bottom, from(#f3f3f3), to(#eaeaea));
+  background-image: -moz-linear-gradient(top, #f3f3f3, #eaeaea);
+  background-image: -ms-linear-gradient(top, #f3f3f3, #eaeaea);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f3f3f3), color-stop(100%, #5eaeaea));
+  background-image: -webkit-linear-gradient(top, #f3f3f3, #eaeaea);
+  background-image: -o-linear-gradient(top, #f3f3f3, #eaeaea);
+  background-image: linear-gradient(top, #f3f3f3, #eaeaea);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f3f3f3', endColorstr='#eaeaea', GradientType=0);
+  margin: 0 0 0 20px;
+  text-align: center;
+}
+
+.team-select h4 {
+  font-size: 18px;
+  font-family: "HelveticaNeue-BoldCondensed", "HelveticaNeue-CondensedBold", "Helvetica Neue Bold Condensed", "Helvetica Neue", "Arial Narrow", "Arial", sans-serif;
+  padding: 110px 0 0 0;
 }
 
 .home-pie {
@@ -229,7 +262,7 @@ body {
 }
 
 .content {
-  padding: 0 20px 20px 20px;
+  padding: 20px;
 }
 
 
@@ -880,6 +913,8 @@ input, textarea {
   -o-transition: border linear 0.2s, box-shadow linear 0.2s;
   transition: border linear 0.2s, box-shadow linear 0.2s;
   background-color: #fff;
+  height: 32px;
+  font-size: 24px;
 }
 input:focus, textarea:focus {
   outline: 0;
