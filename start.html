@@ -22,6 +22,9 @@
     <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js">
         </script>
+    <script type="text/javascript" src="js/d3.js"></script>
+    <script type="text/javascript" src="js/d3.layout.js"></script>
+
     <style type="text/css">
     .team-select {
         cursor: pointer;
@@ -97,28 +100,10 @@
         <div class="begin">
         <a href="javascript: void(0);">Begin</a>
         </div>
-        <script>
-        $(document).ready(function(){
-            $('.begin a').click(function(){
-                $('.page').hide();
-                $('#vote-page').show();
-                var options = [
-                    "Juggling",
-                    "Mini car driving",
-                    "Tightrope walking",
-                    "Lion taming",
-                    "Fire breathing",
-                    "Curiously deformed",
-                    "Knife throwing",
-                    "Knife target",
-                    ];
-                $('#vote-page').show();
-                $( "#tpl-vote-page-option" ).tmpl({options:options}).appendTo(".options");
-            });
-        });
-        </script>
     </div><!-- code page-->
 
+
+    <!-- vote page-->
     <script id="tpl-vote-page-option" type="text/x-jquery-tmpl">
         {{each options}}
         <div>
@@ -144,13 +129,93 @@
         </div>
         <br/>
         <br/>
-        <a href="results.html">See Results</a>
+        <div class="results">
+        <a href="javascript: void(0);">See Results</a>
+        </div>
     </div><!-- vote page-->
+
+
+    <div class="page" id="pie-page">
+        <div id="the-pie">
+        </div>
+    </div><!-- pie page-->
 
 </div>
 
 <script>
 $(document).ready(function(){
+    var options = [
+        "Juggling",
+        "Mini car driving",
+        "Tightrope walking",
+        "Lion taming",
+        "Fire breathing",
+        "Curiously deformed",
+        "Knife throwing",
+        "Knife target",
+        ];
+
+    $('.begin a').click(function(){
+        $('.page').hide();
+        $('#vote-page').show();
+        $('#vote-page').show();
+        $( "#tpl-vote-page-option" ).tmpl({options:options}).appendTo(".options");
+        draw_pie(options);
+    });
+
+    $('.results a').click(function(){
+        console.log('foo');
+        $('.page').hide();
+        $('#pie-page').show();
+    });
+
+    function draw_pie(options) {
+        var slice_spacing = .00;
+        var w = 450,
+            h = 450,
+            r = Math.min(w, h) / 2,
+            color = d3.scale.category20(),
+            donut = d3.layout.pie(),
+            arc = d3.svg.arc().innerRadius(r * .90).outerRadius(r);
+
+        var vis = d3.select($("#pie-page").get(0))
+          .append("svg:svg")
+            .data([options])
+            .attr("width", 600)
+            .attr("height", 600);
+
+        var arcs = vis.selectAll("g.arc")
+            .data(donut)
+          .enter().append("svg:g")
+            .attr("class", "arc")
+            .attr("transform", function(d,i) {
+                var xoffset = r+100;
+                var yoffset = r+20;
+                xoffset += 5 * Math.sin((i+.5)*((Math.PI*2)/8));
+                yoffset += -5 * Math.cos((i+.5)*((Math.PI*2)/8));
+                return "translate(" + xoffset + "," + yoffset + ")";
+            });
+
+        arcs.append("svg:path")
+            .attr("fill", function(d, i) { return '#000'; })
+            .attr("id", function(d, i) { return "slice-" + i })
+            .attr("d", function(d, i) {
+                var a = ((Math.PI*2)/8);
+                return arc
+                    .startAngle((i*a)+slice_spacing)
+                    .endAngle(((i+1)*a) -slice_spacing)
+                    ();
+                });
+        arcs.append("svg:text")
+            .attr("fill", "#FFF")
+            .attr("dy", "1.0em")
+            .attr("text-anchor", "middle")
+                .append("svg:textPath")
+                    .attr("xlink:href", function(d,i) { return "#slice-" + i; })
+                    .attr("startOffset", "22%")
+                    .text(function(d, i) { return options[i]; });
+    } // end draw pie
+    // draw_pie(options);
 });
 </script>
 
