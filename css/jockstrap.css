@@ -182,16 +182,22 @@ body {
 }
 
 .container {
-  width: 980px;
+  width: 960px;
   margin: 20px auto;
   zoom: 1;
 }
 
 h1.home {
   font-family: "HelveticaNeue-BoldCondensed", "Helvetica Neue Bold Condensed", "Helvetica Neue", "Arial Narrow", "Arial", sans-serif;
+  font-size: 48px;
   font-weight: 800;
   font-stretch: condensed;
   text-transform: uppercase;
+}
+
+.home-pie {
+  height: 400px;
+  background: url(../images/home-pie.png) no-repeat 0 0;
 }
 
 .cell {
