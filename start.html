@@ -36,44 +36,46 @@
 </head>
 <body>
 <div class="container">
-	<div class="row info">
-		<div class="span2">
-			<h1>1</h1>
-		</div>
-		<div class="span13">
-			<p>The first task is to list out areas of competency that you need to make your 
-product successful. Keep it at a fairly high-level, like Code Development, UX 
-Design, Marketing or Accounting.</p>
-		</div>
-	</div>
-	<div class="page container-small cell" id="start-page">
-		<div class="content">
-			<div class="row">
-				<div class="span4">
-					<div class="clearfix"><input id="company-name" class="span9" placeholder="Company or Project Name" type="text"></input></div>
-				</div>	
+	<div class="page" id="start-page">
+		<div class="row info">
+			<div class="span2">
+				<h1>1</h1>
 			</div>
-			<br />
-			<div class="row">
-				<div class="span9-half">
-					<h3>Choose Your Team's Project Type:</h3>
-					<br />
-					<div class="team-select tech">
-						<h4>Tech Startup</h4>
-					</div>
-					<div class="team-select circus">
-						<h4>Circus Act</h4>
-					</div>
-					<div class="team-select santa">
-						<h4>Santa's Workshop</h4>
+			<div class="span13">
+				<p>The first task is to choose a list of areas of competency that you need to make your 
+				product successful. Keep it at a fairly high-level, like Code Development, UX 
+				Design, Marketing or Accounting.</p>
+			</div>
+		</div>
+		<div class="container-small cell">
+			<div class="content">
+				<div class="row">
+					<div class="span4">
+						<div class="clearfix"><input id="company-name" class="span9" placeholder="Company or Project Name" type="text"></input></div>
+					</div>	
+				</div>
+				<br />
+				<div class="row">
+					<div class="span9-half">
+						<h3>Choose Your Team's Project Type:</h3>
+						<br />
+						<div class="team-select tech">
+							<h4>Tech Startup</h4>
+						</div>
+						<div class="team-select circus">
+							<h4>Circus Act</h4>
+						</div>
+						<div class="team-select santa">
+							<h4>Santa's Workshop</h4>
+						</div>
 					</div>
 				</div>
-			</div>
-			<br />
-			<div class="row">
-				<div class="span9">
-					<div class="next" style="display:none;">
-						<a href="javascript: void(0);" class="btn large primary">Next</a>
+				<br />
+				<div class="row">
+					<div class="span9">
+						<div class="next" style="display:none;">
+							<a href="javascript: void(0);" class="btn large primary">Next</a>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -98,29 +100,34 @@ Design, Marketing or Accounting.</p>
             });
         });
         </script>
-    </div><!-- start-page -->
-
-    <div class="page" id="code-page" style="display:none;">
-        Congratulations!  You've created a new Balanced Team Pie for <span
-        class="company-name">Foo</span>
-
-        <br/>
-        <br/>
-
-        Give you team members this access code so they can connection:
-        
-        <br/>
-        <br/>
-
-        X 9 L o
-
-        <br/>
-        <br/>
-
-        <div class="begin">
-        <a href="javascript: void(0);">Begin</a>
-        </div>
-    </div><!-- code page-->
+</div><!-- start-page -->
+<div class="container">
+	<div class="page" id="code-page" style="display:none;">
+		<div class="row info">
+			<div class="span2">
+				<h1>2</h1>
+			</div>
+			<div class="span13">
+				<p>Congratulations!  You've created a new Balanced Team Pie for <span class="company-name">Foo</span></p>
+			</div>
+		</div>
+		<div class="container-small cell">
+			<div class="content">
+				<div class="row">
+					<div class="span9-half">
+						<h3>Here's The Access Code For Your Team To Join In:</h3>
+						<br />
+						<h1 class="access-code-big">X 9 L o</h1>
+						<br />
+						<div class="begin">
+							<a href="javascript: void(0);" class="btn large primary">Begin</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div><!-- code page-->
 
 
     <!-- vote page-->

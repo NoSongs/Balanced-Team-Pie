@@ -222,6 +222,17 @@ body {
   padding: 8px 0 0 0;
 }
 
+.company-name {
+  font-weight: 700;
+}
+
+.access-code-big {
+  text-align: center;
+  font-size: 100px;
+  font-family: "HelveticaNeue-BoldCondensed", "HelveticaNeue-CondensedBold", "Helvetica Neue Bold Condensed", "Helvetica Neue", "Arial Narrow", "Arial", sans-serif; 
+  margin: 40px 0;
+}
+
 .info {
   margin: 60px 0 0 0;
 }
