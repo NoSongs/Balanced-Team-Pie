@@ -879,7 +879,7 @@ input, textarea {
   -ms-transition: border linear 0.2s, box-shadow linear 0.2s;
   -o-transition: border linear 0.2s, box-shadow linear 0.2s;
   transition: border linear 0.2s, box-shadow linear 0.2s;
-  background-color: #f5f5f5;
+  background-color: #fff;
 }
 input:focus, textarea:focus {
   outline: 0;
@@ -923,6 +923,8 @@ form div.clearfix.error .input-prepend span.add-on, form div.clearfix.error .inp
   border-color: #c87872;
   color: #b9554d;
 }
+
+
 .input-mini,
 input.mini,
 textarea.mini,
