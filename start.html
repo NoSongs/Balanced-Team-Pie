@@ -20,6 +20,8 @@
 	<![endif]-->
 
     <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js">
+        </script>
     <style type="text/css">
     .team-select {
         cursor: pointer;
@@ -100,11 +102,30 @@
             $('.begin a').click(function(){
                 $('.page').hide();
                 $('#vote-page').show();
+                var options = [
+                    "Juggling",
+                    "Mini car driving",
+                    "Tightrope walking",
+                    "Lion taming"];
+                $('#vote-page').show();
+                $( "#tpl-vote-page-option" ).tmpl({options:options}).appendTo(".options");
             });
         });
         </script>
     </div><!-- code page-->
 
+    <script id="tpl-vote-page-option" type="text/x-jquery-tmpl">
+        {{each options}}
+        <div>
+            ${$value}
+            <input type="radio" name="category-${$index}" value="0" />0
+            <input type="radio" name="category-${$index}" value="1" />1
+            <input type="radio" name="category-${$index}" value="2" />2
+            <input type="radio" name="category-${$index}" value="3" />3
+            <input type="radio" name="category-${$index}" value="4" />4
+        </div>
+        {{/each}}
+    </script>
     <div class="page" id="vote-page" style="display:none">
         How are you called?
         <br/>
@@ -114,47 +135,19 @@
         How would you rate you ability in these areas?
         <br/>
         <br/>
-        <div>
-            Juggling
-            <input type="radio" name="category01" value="0" />0
-            <input type="radio" name="category01" value="1" />1
-            <input type="radio" name="category01" value="2" />2
-            <input type="radio" name="category01" value="3" />3
-            <input type="radio" name="category01" value="4" />4
+        <div class="options">
         </div>
-        <div>
-            Mini car driving
-            <input type="radio" name="category01" value="0" />0
-            <input type="radio" name="category01" value="1" />1
-            <input type="radio" name="category01" value="2" />2
-            <input type="radio" name="category01" value="3" />3
-            <input type="radio" name="category01" value="4" />4
-        </div>
-        <div>
-            Tightrope walking
-            <input type="radio" name="category01" value="0" />0
-            <input type="radio" name="category01" value="1" />1
-            <input type="radio" name="category01" value="2" />2
-            <input type="radio" name="category01" value="3" />3
-            <input type="radio" name="category01" value="4" />4
-        </div>
-        <div>
-            Lion tamer
-            <input type="radio" name="category01" value="0" />0
-            <input type="radio" name="category01" value="1" />1
-            <input type="radio" name="category01" value="2" />2
-            <input type="radio" name="category01" value="3" />3
-            <input type="radio" name="category01" value="4" />4
-        </div>
-
         <br/>
         <br/>
-
         <a href="results.html">See Results</a>
     </div><!-- vote page-->
 
 </div>
 
+<script>
+$(document).ready(function(){
+});
+</script>
 
 </body>
 </html>
