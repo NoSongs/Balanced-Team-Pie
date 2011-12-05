@@ -135,7 +135,9 @@
     </div><!-- vote page-->
 
 
-    <div class="page" id="pie-page">
+    <div class="page" id="pie-page" style="display:none;">
+        <a style="position:absolute; margin-left:10px; margin-top:20px"
+            href="javascript: void(0);" class="btn primary go-vote">Change your scores</a>
         <div id="the-pie">
         </div>
     </div><!-- pie page-->
@@ -160,16 +162,25 @@ $(document).ready(function(){
         $('#vote-page').show();
         $('#vote-page').show();
         $( "#tpl-vote-page-option" ).tmpl({options:options}).appendTo(".options");
-        draw_pie(options);
     });
 
     $('.results a').click(function(){
-        console.log('foo');
+        var choices = [];
+        for(var i=0; i<=8; i++) {
+            choices[choices.length] = $('input[name=category-'+i+']:checked').val();
+        }
+        draw_pie(options, choices);
+        console.log(choices);
         $('.page').hide();
         $('#pie-page').show();
     });
 
-    function draw_pie(options) {
+    $('.go-vote').click(function(){
+        $('.page').hide();
+        $('#vote-page').show();
+    });
+
+    function draw_pie(options, choices) {
         var slice_spacing = .00;
         var w = 450,
             h = 450,
@@ -178,7 +189,8 @@ $(document).ready(function(){
             donut = d3.layout.pie(),
             arc = d3.svg.arc().innerRadius(r * .90).outerRadius(r);
 
-        var vis = d3.select($("#pie-page").get(0))
+        $("#the-pie").html('');
+        var vis = d3.select("#the-pie")
           .append("svg:svg")
             .data([options])
             .attr("width", 600)
@@ -214,8 +226,29 @@ $(document).ready(function(){
                     .attr("xlink:href", function(d,i) { return "#slice-" + i; })
                     .attr("startOffset", "22%")
                     .text(function(d, i) { return options[i]; });
+
+        for(var level=4; level>0; level--) {
+            var offset = -.2 + (level*.2)
+            var depth = .18 + offset;
+            if(level==4) depth += .1;
+            arcs.append("svg:path")
+                .attr("fill", function(d, i) { return '#000'; })
+                .attr("fill-opacity", 0.3)
+                .attr("d", function(d, i) {
+                    if(choices[i] >= level) {
+                        var a = ((Math.PI*2)/8);
+                        return d3.svg.arc()
+                            .innerRadius(r * offset)
+                            .outerRadius(r * depth)
+                            .startAngle((i*a)+slice_spacing)
+                            .endAngle(((i+1)*a) -slice_spacing)
+                            ();
+                    }
+                });
+        }
     } // end draw pie
-    // draw_pie(options);
+    // choices = [3,2,1,4,0,2,3,4];
+    // draw_pie(options, choices);
 });
 </script>
 
