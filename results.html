@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Pie Chart</title>
+<script type="text/javascript" src="js/d3.js"></script>
+<script type="text/javascript" src="js/d3.layout.js"></script>
+<link rel="stylesheet" type="text/css" href="css/jockstrap.css" />
+</head>
+<body>
+
+<a style="position:absolute; margin-left:40px; margin-top:40px"
+    href="index.html" class="btn primary">Implode</a>
+
+<script type="text/javascript">
+
+    var data = [
+        {name: 'USER RESEARCH'},
+        {name: 'PROJECT PLANNING'},
+        {name: 'COMMUNICATION'},
+        {name: 'MARKETING'},
+        {name: 'LO-FI PROTOTYPE'},
+        {name: 'VISUAL DESIGN'},
+        {name: 'PYTHON'},
+        {name: 'DEVELOPMENT'}
+    ];
+
+    var slice_spacing = .00;
+
+    var w = 560,
+        h = 560,
+        r = Math.min(w, h) / 2,
+        color = d3.scale.category20(),
+        donut = d3.layout.pie(),
+        arc = d3.svg.arc().innerRadius(r * .90).outerRadius(r);
+
+    var vis = d3.select("body")
+      .append("svg:svg")
+        .data([data])
+        .attr("width", 800)
+        .attr("height", 600);
+
+    var arcs = vis.selectAll("g.arc")
+        .data(donut)
+      .enter().append("svg:g")
+        .attr("class", "arc")
+        .attr("transform", function(d,i) {
+            var xoffset = r+100;
+            var yoffset = r+20;
+            xoffset += 8 * Math.sin((i+.5)*((Math.PI*2)/8));
+            yoffset += -8 * Math.cos((i+.5)*((Math.PI*2)/8));
+            return "translate(" + xoffset + "," + yoffset + ")";
+        });
+
+    arcs.append("svg:path")
+        .attr("fill", function(d, i) { return '#000'; })
+        .attr("id", function(d, i) { return "slice-" + i })
+        .attr("d", function(d, i) {
+            var a = ((Math.PI*2)/8);
+            return arc
+                .startAngle((i*a)+slice_spacing)
+                .endAngle(((i+1)*a) -slice_spacing)
+                ();
+            });
+
+    arcs.append("svg:path")
+        .attr("fill", function(d, i) { return '#fcc46d'; })
+        .attr("d", function(d, i) {
+            var a = ((Math.PI*2)/8);
+            return d3.svg.arc()
+                .innerRadius(r * .60)
+                .outerRadius(r * .88)
+                .startAngle((i*a)+slice_spacing)
+                .endAngle(((i+1)*a) -slice_spacing)
+                ();
+            });
+
+    arcs.append("svg:path")
+        .attr("fill", function(d, i) { return '#f140aa'; })
+        .attr("d", function(d, i) {
+            var a = ((Math.PI*2)/8);
+            return d3.svg.arc()
+                .innerRadius(r * .40)
+                .outerRadius(r * .58)
+                .startAngle((i*a)+slice_spacing)
+                .endAngle(((i+1)*a) -slice_spacing)
+                ();
+            });
+
+    arcs.append("svg:path")
+        .attr("fill", function(d, i) { return '#5fc0ea'; })
+        .attr("d", function(d, i) {
+            var a = ((Math.PI*2)/8);
+            return d3.svg.arc()
+                .innerRadius(r * .20)
+                .outerRadius(r * .38)
+                .startAngle((i*a)+slice_spacing)
+                .endAngle(((i+1)*a) -slice_spacing)
+                ();
+            });
+
+    arcs.append("svg:path")
+        .attr("fill", function(d, i) { return '#6bc877'; })
+        .attr("d", function(d, i) {
+            var a = ((Math.PI*2)/8);
+            return d3.svg.arc()
+                .innerRadius(r * .0)
+                .outerRadius(r * .18)
+                .startAngle((i*a)+slice_spacing)
+                .endAngle(((i+1)*a) -slice_spacing)
+                ();
+            });
+
+    arcs.append("svg:text")
+        .attr("fill", "#FFF")
+        .attr("dy", "1.40em")
+        .attr("text-anchor", "middle")
+            .append("svg:textPath")
+                .attr("xlink:href", function(d,i) { return "#slice-" + i; })
+                .attr("startOffset", "22%")
+                .text(function(d, i) { return data[i].name; });
+
+</script>
+</body>
+</html>

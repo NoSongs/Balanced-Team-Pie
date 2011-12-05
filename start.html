@@ -1,28 +1,146 @@
+<!DOCTYPE html>
+<head>
+	<meta charset="utf-8" />
+	<!-- Set the viewport width to device width for mobile -->
+	<meta name="viewport" content="width=device-width" />
+	
+	<title>Balanced Team Pie - LUXr</title>
+  
+	<!-- Included CSS Files -->
+	<link rel="stylesheet" href="css/jockstrap.css">
 
-<style type="text/css">
-.team-select {
-    cursor: pointer;
-}
+	<!--[if lt IE 9]>
+		<link rel="stylesheet" href="css/ie.css">
+	<![endif]-->
 
-</style>
+	
+	<!-- IE Fix for HTML5 Tags -->
+	<!--[if lt IE 9]>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
 
-Company Name
-<input type="text"></input>
+    <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <style type="text/css">
+    .team-select {
+        cursor: pointer;
+    }
+    </style>
+</head>
+<body>
+<div class="container">
 
-<br/>
-<br/>
+    <div class="page" id="start-page">
+        Company Name
+        <br/>
+        <input id="company-name" type="text"></input>
 
-Choose Team Type
+        <br/>
+        <br/>
 
+        Choose Team Type
+        <br/>
+        <div class="team-select">
+            Tech Startup
+        </div>
+        <div class="team-select">
+            Circus Performers
+        </div>
+        <div class="team-select">
+            Santas Toy Workshop
+        </div>
 
-<div class="team-select">
-Tech Startup
+        <br/>
+
+        <div class="next" style="display:none;">
+        <a href="javascript: void(0);">Next</a>
+        </div>
+        <script>
+        $(document).ready(function(){
+            var team_select_background = $('.team-select').css('background-color');
+            var company_name, team_type;
+            function show_next() {
+                $('.next').show();
+            }
+            $('.team-select').click(function(){
+                $('.team-select').css('background-color', team_select_background);
+                $(this).css('background-color', 'yellow');
+                show_next();
+            });
+            $('.next a').click(function(){
+                $('.page').hide();
+                $('#code-page').show();
+                $('.company-name').html($('#company-name').val());
+            });
+        });
+        </script>
+    </div><!-- start-page -->
+
+    <div class="page" id="code-page" style="display:none;">
+        Congratulations!  You've created a new Balanced Team Pie for <span
+        class="company-name">Foo</span>
+
+        <br/>
+        <br/>
+
+        Give you team members this access code so they can connection:
+        
+        <br/>
+        <br/>
+
+        X 9 L o
+
+        <br/>
+        <br/>
+
+        <div class="begin">
+        <a href="javascript: void(0);">Begin</a>
+        </div>
+        <script>
+        $(document).ready(function(){
+            $('.begin a').click(function(){
+                $('.page').hide();
+                $('#vote-page').show();
+            });
+        });
+        </script>
+    </div><!-- code page-->
+
+    <div class="page" id="vote-page" style="display:none">
+        How are you called?
+        <br/>
+        <input id="member-name" type="text"></input>
+        <br/>
+        <br/>
+        How would you rate you ability in these areas?
+        <br/>
+        <br/>
+        <div>
+            Juggling
+            <input type="radio" name="category01" value="0" />0
+            <input type="radio" name="category01" value="1" />1
+            <input type="radio" name="category01" value="2" />2
+            <input type="radio" name="category01" value="3" />3
+            <input type="radio" name="category01" value="4" />4
+        </div>
+        <div>
+            Mini car driving
+            <input type="radio" name="category01" value="0" />0
+            <input type="radio" name="category01" value="1" />1
+            <input type="radio" name="category01" value="2" />2
+            <input type="radio" name="category01" value="3" />3
+            <input type="radio" name="category01" value="4" />4
+        </div>
+
+        <br/>
+        <br/>
+
+        <a href="results.html">See Results</a>
+    </div><!-- vote page-->
+
+    
+
 </div>
 
-<div class="team-select">
-Circus Performers
-</div>
 
-<div class="team-select">
-Santas Toy Workshop
-</div>
+</body>
+</html>
