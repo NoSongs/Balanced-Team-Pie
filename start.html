@@ -207,10 +207,11 @@ $(document).ready(function(){
         "Knife throwing",
         "Knife target",
         ];
+    $('#vote-page').show();
+    $( "#tpl-vote-page-option" ).tmpl({options:options}).appendTo(".options");
 
     $('.begin a').click(function(){
         $('.page').hide();
-        $('#vote-page').show();
         $('#vote-page').show();
         $( "#tpl-vote-page-option" ).tmpl({options:options}).appendTo(".options");
     });
