@@ -188,7 +188,7 @@ body {
 }
 
 h1.home {
-  font-family: "HelveticaNeue-BoldCondensed", "Helvetica Neue Bold Condensed", "Helvetica Neue", "Arial Narrow", "Arial", sans-serif;
+  font-family: "HelveticaNeue-BoldCondensed", "HelveticaNeue-CondensedBold", "Helvetica Neue Bold Condensed", "Helvetica Neue", "Arial Narrow", "Arial", sans-serif;
   font-size: 48px;
   font-weight: 800;
   font-stretch: condensed;
