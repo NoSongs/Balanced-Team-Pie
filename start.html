@@ -25,6 +25,9 @@
     <script type="text/javascript" src="js/d3.js"></script>
     <script type="text/javascript" src="js/d3.layout.js"></script>
 
+    <script type="text/javascript" src="js/underscore-min.js"></script>
+    <script type="text/javascript" src="js/simperium.js"></script>
+
     <style type="text/css">
     .team-select {
         cursor: pointer;
@@ -148,6 +151,27 @@
 
 <script>
 $(document).ready(function(){
+
+    SIMPERIUM_OPTS = {
+        host        : 'apiotra.simperium.com',
+        port        : '80',
+        token       : '991a75556cc14e4b8b556d8cb67feb55'
+    };
+
+    var bucket = new Simperium('app-society-569', 'Klmo', SIMPERIUM_OPTS);
+    bucket.set_get_data(get_data);
+    bucket.set_notify(notify);
+    bucket.initialize_client();
+    bucket.start();
+
+    function get_data(id) {
+        return null;
+    }
+    function notify(id, data) {
+        console.log(id);
+        console.log(data);
+    }
+
     var options = [
         "Juggling",
         "Mini car driving",
