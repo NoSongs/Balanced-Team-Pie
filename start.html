@@ -102,7 +102,7 @@
         </script>
 </div><!-- start-page -->
 <div class="container">
-	<div class="page" id="code-page" style="display:none;">
+	<div class="page" id="code-page">
 		<div class="row info">
 			<div class="span2">
 				<h1>2</h1>
@@ -128,9 +128,7 @@
 		</div>
 	</div>
 </div><!-- code page-->
-
-
-    <!-- vote page-->
+<!-- vote page-->
     <script id="tpl-vote-page-option" type="text/x-jquery-tmpl">
         {{each options}}
         <div>
@@ -143,22 +141,43 @@
         </div>
         {{/each}}
     </script>
-    <div class="page" id="vote-page" style="display:none">
-        How are you called?
-        <br/>
-        <input id="member-name" type="text"></input>
-        <br/>
-        <br/>
-        How would you rate you ability in these areas?
-        <br/>
-        <br/>
-        <div class="options">
-        </div>
-        <br/>
-        <br/>
-        <div class="results">
-        <a href="javascript: void(0);">See Results</a>
-        </div>
+<div class="container">
+    <div class="page" id="vote-page">
+	<div class="row info">
+		<div class="span2">
+			<h1>3</h1>
+		</div>
+		<div class="span13">
+			<p>Vote using the following scale:
+				<ul>
+					<li>0 - No exposure</li>
+					<li>1 - Some exposure and/or theoretical knowledge</li> 
+					<li>2 - Have done this before</li> 
+					<li>3 - Done this many times, feel confident</li> 
+					<li>4 - Have a lot of expertise</li> 
+				</ul>
+			</p>
+		</div>
+	</div>
+	<div class="container-small cell">
+			<div class="content">
+				<div class="row">
+					<div class="span9-half">
+						<input id="member-name" placeholder="Your Name" type="text"></input>
+							<br/>
+							How would you rate you ability in these areas?
+							<br/>
+							<br/>
+							<div class="options"></div>
+							<br/>
+							<br/>
+							<div class="results">
+								<a href="javascript: void(0);" class="btn large primary">See Results</a>
+							</div>
+					</div>
+				</div>
+			</div>
+	</div>
     </div><!-- vote page-->
 
 
