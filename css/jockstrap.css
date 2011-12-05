@@ -193,6 +193,16 @@ body {
   zoom: 1;
 }
 
+.brdr {
+  height: 1px;
+  border-top: 1px solid #ccc;
+}
+
+.options span {
+  margin: 0 20px 0 0;
+  padding: 0 0 0 10px
+}
+
 .home {
   margin: 60px 0 0 0;
 }
