@@ -8,9 +8,6 @@
 </head>
 <body>
 
-<a style="position:absolute; margin-left:40px; margin-top:40px"
-    href="index.html" class="btn primary">Implode</a>
-
 <script type="text/javascript">
 
     var data = [
@@ -26,8 +23,8 @@
 
     var slice_spacing = .00;
 
-    var w = 560,
-        h = 560,
+    var w = 450,
+        h = 450,
         r = Math.min(w, h) / 2,
         color = d3.scale.category20(),
         donut = d3.layout.pie(),
@@ -46,8 +43,8 @@
         .attr("transform", function(d,i) {
             var xoffset = r+100;
             var yoffset = r+20;
-            xoffset += 8 * Math.sin((i+.5)*((Math.PI*2)/8));
-            yoffset += -8 * Math.cos((i+.5)*((Math.PI*2)/8));
+            xoffset += 5 * Math.sin((i+.5)*((Math.PI*2)/8));
+            yoffset += -5 * Math.cos((i+.5)*((Math.PI*2)/8));
             return "translate(" + xoffset + "," + yoffset + ")";
         });
 
@@ -112,7 +109,7 @@
 
     arcs.append("svg:text")
         .attr("fill", "#FFF")
-        .attr("dy", "1.40em")
+        .attr("dy", "1.15em")
         .attr("text-anchor", "middle")
             .append("svg:textPath")
                 .attr("xlink:href", function(d,i) { return "#slice-" + i; })
