@@ -26,7 +26,7 @@
     <script type="text/javascript" src="js/d3.layout.js"></script>
 
     <script type="text/javascript" src="js/underscore-min.js"></script>
-    <script type="text/javascript" src="js/simperium.js"></script>
+    <script type="text/javascript" src="https://simple-note.appspot.com/script/simperium.js"></script>
 
     <style type="text/css">
     .team-select {
@@ -172,6 +172,9 @@
 </div>
 
 <script>
+var bucket;
+var users;
+
 $(document).ready(function(){
 
     SIMPERIUM_OPTS = {
@@ -180,7 +183,7 @@ $(document).ready(function(){
         token       : '991a75556cc14e4b8b556d8cb67feb55'
     };
 
-    var bucket = new Simperium('app-society-569', 'Klmo', SIMPERIUM_OPTS);
+    bucket = new Simperium('app-society-569', 'Klmo', SIMPERIUM_OPTS);
     bucket.set_get_data(get_data);
     bucket.set_notify(notify);
     bucket.initialize_client();
@@ -214,12 +217,11 @@ $(document).ready(function(){
 
     $('.results a').click(function(){
         var choices = [];
-        for(var i=0; i<=8; i++) {
+        for(var i=0; i<=7; i++) {
             choices[choices.length] = $('input[name=category-'+i+']:checked').val();
         }
-
-        // var member_name = $('I
-        // bucket.update(
+        var member_name = $('#member-name').val();
+        bucket.update(member_name, {scores: choices});
 
         draw_pie(options, choices);
         console.log(choices);
