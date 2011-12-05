@@ -206,10 +206,24 @@ body {
   margin: 60px 0 40px 0;
 }
 
-.home p {
+.home p, .info p {
   font-family: Georgia, serif;
   font-style: italic;
   font-size: 18px;
+}
+
+.info h1 {
+  display: block;
+  height: 51px;
+  width: 51px;
+  background: url(../images/circle.png) no-repeat 0 0;
+  text-align: center;
+  color: #fff;
+  padding: 8px 0 0 0;
+}
+
+.info {
+  margin: 60px 0 0 0;
 }
 
 .team-select {
@@ -229,8 +243,8 @@ body {
   background-image: -o-linear-gradient(top, #f3f3f3, #eaeaea);
   background-image: linear-gradient(top, #f3f3f3, #eaeaea);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f3f3f3', endColorstr='#eaeaea', GradientType=0);
-  margin: 0 0 0 20px;
   text-align: center;
+  margin: 0 0 0 20px;
 }
 
 .team-select h4 {
@@ -343,6 +357,9 @@ a:hover {
 }
 .span9 {
   width: 520px;
+}
+.span9-half {
+  width: 560px;
 }
 .span10 {
   width: 580px;
@@ -818,7 +835,7 @@ input,
 select,
 textarea {
   font-family: Helvetica, Arial, sans-serif;
-  font-size: 14px;
+  font-size: 24px;
   font-weight: normal;
   line-height: normal;
 }
@@ -846,7 +863,7 @@ select,
   height: 18px;
   padding: 4px;
   font-size: 16px;
-  line-height: 18px;
+  line-height: 28px;
   color: #808080;
   border: 1px solid #ccc;
   -webkit-border-radius: 3px;
