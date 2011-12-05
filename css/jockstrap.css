@@ -187,8 +187,11 @@ body {
   zoom: 1;
 }
 
-.page-top {
-  margin: 100px 0 0 0;
+h1.home {
+  font-family: "HelveticaNeue-BoldCondensed", "Helvetica Neue Bold Condensed", "Helvetica Neue", "Arial Narrow", "Arial", sans-serif;
+  font-weight: 800;
+  font-stretch: condensed;
+  text-transform: uppercase;
 }
 
 .cell {
