@@ -47,12 +47,12 @@
                 <p>Create a visualization that clearly shows what skills are
                 present in the team, where there are overlaps and where there
                 are gaps.</p>
-                <p class="home-actions go-create">
-                    <a class="btn primary large"
+                <p class="home-actions">
+                    <a class="btn primary large go-create"
                         href="javascript: void(0);">Start A New Team Pie</a>
                     <span>or</span>
                     <a href="javascript: void(0);"
-                        class="btn secondary large">Join Your Team In Progress</a>
+                        class="btn secondary large go-join">Join Your Team In Progress</a>
                 </p>
             </div>
             <div class="span7 home-pie">
@@ -69,16 +69,20 @@
 				<h1>1</h1>
 			</div>
 			<div class="span13">
-				<p>The first task is to choose a list of areas of competency that you need to make your 
-				product successful. Keep it at a fairly high-level, like Code Development, UX 
-				Design, Marketing or Accounting.</p>
+                <p>The first task is to choose a list of areas of competency
+                that you need to make your product successful. Keep it at a
+                fairly high-level, like Code Development, UX Design, Marketing
+                or Accounting.</p>
 			</div>
 		</div>
 		<div class="container-small cell">
 			<div class="content">
 				<div class="row">
 					<div class="span4">
-						<div class="clearfix"><input id="company-name" class="span9" placeholder="Company or Project Name" type="text"></input></div>
+						<div class="clearfix">
+                            <input id="company-name" class="span9"
+                                placeholder="Company or Project Name" type="text"></input>
+                        </div>
 					</div>	
 				</div>
 				<br />
@@ -100,9 +104,8 @@
 				<br />
 				<div class="row">
 					<div class="span9">
-						<div class="next" style="display:none;">
-							<a href="javascript: void(0);" class="btn large primary">Next</a>
-						</div>
+                        <a href="javascript: void(0);"
+                            class="btn large primary go-code">Next</a>
 					</div>
 				</div>
 			</div>
@@ -118,7 +121,8 @@
 				<h1>2</h1>
 			</div>
 			<div class="span13">
-				<p>Congratulations!  You've created a new Balanced Team Pie for <span class="company-name">Foo</span></p>
+                <p>Congratulations!  You've created a new Balanced Team Pie for
+                    <span class="company-name">Foo</span></p>
 			</div>
 		</div>
 		<div class="container-small cell">
@@ -140,14 +144,47 @@
     <!-- code page end -->
 
 
+    <!-- join-page begin -->
+	<div class="page" id="join-page">
+		<div class="row info">
+			<div class="span2">
+				<h1>1</h1>
+			</div>
+			<div class="span13">
+                <p>Welcome.</p>
+			</div>
+		</div>
+		<div class="container-small cell">
+			<div class="content">
+				<div class="row">
+					<div class="span9-half">
+						<h3>Enter the access code to join</h3>
+						<br />
+                        <p class="join-page-error">
+                        </p>
+						<br />
+                        <input type="text"></input>
+						<br />
+                        <a href="javascript: void(0);" class="btn large primary">Join</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+    <!-- join-page end -->
+
+
     <!-- vote page begin -->
     <script id="tpl-vote-page-option" type="text/x-jquery-tmpl">
         {{each options}}
         <div class="range-inputs">
             <h5>${$value}</h5>
-		<span id="range" class="range-text">0</span>
-		<input  class="range-span" type="range" min="0" max="4" value="0" step="1" onchange="showValue(this.value)">
-	</div>
+            <span class="range-text category-value-${$index}">0</span>
+            <input class="range-span"
+                data-span="category-value-${$index}"
+                name="category-${$index}" type="range" min="0" max="4" value="0"
+                step="1"></input>
+	    </div>
         {{/each}}
     </script>
     <div class="page" id="vote-page">
@@ -182,9 +219,8 @@
 									}
 							</script>
 							<br/>
-							<div class="results">
-								<a href="javascript: void(0);" class="btn large primary">See Results</a>
-							</div>
+                            <a href="javascript: void(0);"
+                                class="btn large primary go-pie">See Results</a>
 					</div>
 				</div>
 			</div>
@@ -294,11 +330,23 @@
 <script>
 var bucket;
 var users = {};
+var code;
+var state;
 
+var options = [
+    "Juggling",
+    "Mini car driving",
+    "Tightrope walking",
+    "Lion taming",
+    "Fire breathing",
+    "Curiously deformed",
+    "Knife throwing",
+    "Knife target",
+    ];
 
 function make_code() {
     var text = "";
-    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    var possible = "abcdefghijklmnopqrstuvwxyz0123456789";
     for(var i=0; i < 4; i++)
         text += possible.charAt(Math.floor(Math.random() * possible.length));
     return text;
@@ -312,14 +360,139 @@ function weight(category, level) {
     return ret;
 }
 
-$(document).ready(function(){
+// SIMPERIUM
+function start_simperium(code) {
+    SIMPERIUM_OPTS = {
+        host        : 'apiotra.simperium.com',
+        port        : '80',
+        token       : '991a75556cc14e4b8b556d8cb67feb55'
+    };
 
+    bucket = new Simperium('app-society-569', code, SIMPERIUM_OPTS);
+    bucket.set_get_data(get_data);
+    bucket.set_notify(notify);
+    bucket.set_initialized(initialized);
+    bucket.initialize_client();
+    bucket.start();
+}
+function initialized(){
+    if(state=="join") {
+        if(bucket.data.p == "0") {
+            $('.join-page-error').html('bad code');
+            return;
+        }
+        $('.page').hide();
+        $('#vote-page').show();
+    }
+}
+function get_data(id) {return null;}
+function notify(id, data) {
+    console.log(id);
+    console.log(data);
+    if(id.substr(0,5) == 'user.') {
+        users[id.substr(5)] = data;
+        draw_pie(options);
+    }
+}
+//
+
+// awesome noodles
+function draw_pie(options) {
+    $("#pie-users").html('');
+    $( "#tpl-pie-users" ).tmpl({users:_.keys(users)}).appendTo("#pie-users");
+
+    var slice_spacing = .00;
+    var w = 450,
+        h = 450,
+        r = Math.min(w, h) / 2,
+        color = d3.scale.category20(),
+        donut = d3.layout.pie(),
+        arc = d3.svg.arc().innerRadius(r * .90).outerRadius(r);
+
+    $("#the-pie").html('');
+    var vis = d3.select("#the-pie")
+      .append("svg:svg")
+        .data([options])
+        .attr("width", 800)
+        .attr("height", 600);
+
+    var arcs = vis.selectAll("g.arc")
+        .data(donut)
+      .enter().append("svg:g")
+        .attr("class", "arc")
+        .attr("transform", function(d,i) {
+            var xoffset = r+20;
+            var yoffset = r+20;
+            xoffset += 5 * Math.sin((i+.5)*((Math.PI*2)/8));
+            yoffset += -5 * Math.cos((i+.5)*((Math.PI*2)/8));
+            return "translate(" + xoffset + "," + yoffset + ")";
+        });
+
+    var category_colors = [
+        "#000",
+        "#000",
+        "#000",
+        "#000",
+        "#000",
+        "#000",
+        "#000",
+        "#000",
+    ];
+    arcs.append("svg:path")
+        .attr("fill", function(d, i) { return category_colors[i]; })
+        .attr("id", function(d, i) { return "slice-" + i })
+        .attr("d", function(d, i) {
+            var a = ((Math.PI*2)/8);
+            return arc
+                .startAngle((i*a)+slice_spacing)
+                .endAngle(((i+1)*a) -slice_spacing)
+                ();
+            });
+    arcs.append("svg:text")
+        .attr("fill", "#FFF")
+        .attr("dy", "1.3em")
+        .attr("text-anchor", "middle")
+            .append("svg:textPath")
+                .attr("xlink:href", function(d,i) { return "#slice-" + i; })
+                .attr("startOffset", "22%")
+                .text(function(d, i) { return options[i]; });
+
+    for(var level=4; level>0; level--) {
+        var offset = -.2 + (level*.2)
+        var depth = .18 + offset;
+        if(level==4) depth += .1;
+        arcs.append("svg:path")
+            .attr("fill", function(d, i) { return '#000'; })
+            .attr("fill-opacity", function(d, i) {
+                return weight(i, level);
+            })
+            .attr("d", function(d, i) {
+                var a = ((Math.PI*2)/8);
+                return d3.svg.arc()
+                    .innerRadius(r * offset)
+                    .outerRadius(r * depth)
+                    .startAngle((i*a)+slice_spacing)
+                    .endAngle(((i+1)*a) -slice_spacing)
+                    ();
+            });
+    }
+} // end draw pie
+
+
+$(document).ready(function(){
+    //
+    // wire up splash-page
     $('.go-create').click(function(){
         $('.page').hide();
         $('#start-page').show();
     });
+    $('.go-join').click(function(){
+        state = "join";
+        $('.page').hide();
+        $('#join-page').show();
+    });
 
-
+    //
     // wire up create-page
     var team_select_background = $('.team-select').css('background-color');
     var company_name, team_type;
@@ -331,156 +504,56 @@ $(document).ready(function(){
         $(this).css('background-color', 'yellow');
         show_next();
     });
+    $('.go-code').click(function(){
+        var code = make_code();
+        $('.access-code-big').html(code);
 
-    $('.next a').click(function(){
+        start_simperium(code);
+
+        bucket.update('company', {'name': $('#company-name').val()});
+        $('.company-name').html($('#company-name').val());
+
         $('.page').hide();
         $('#code-page').show();
-        $('.company-name').html($('#company-name').val());
     });
 
-    SIMPERIUM_OPTS = {
-        host        : 'apiotra.simperium.com',
-        port        : '80',
-        token       : '991a75556cc14e4b8b556d8cb67feb55'
-    };
+    //
+    // wire up join-page
+    $('#join-page a').click(function(){
+        var code = $('#join-page input').val();
+        start_simperium(code);
+    });
 
-    bucket = new Simperium('app-society-569', 'Klmo', SIMPERIUM_OPTS);
-    bucket.set_get_data(get_data);
-    bucket.set_notify(notify);
-    bucket.initialize_client();
-    bucket.start();
 
-    function get_data(id) {
-        return null;
-    }
-    function notify(id, data) {
-        console.log(id);
-        console.log(data);
-        if(id.substr(0,5) == 'user.') {
-            users[id.substr(5)] = data;
-        }
-        draw_pie(options);
-    }
 
-    var options = [
-        "Juggling",
-        "Mini car driving",
-        "Tightrope walking",
-        "Lion taming",
-        "Fire breathing",
-        "Curiously deformed",
-        "Knife throwing",
-        "Knife target",
-        ];
     $( "#tpl-vote-page-option" ).tmpl({options:options}).appendTo(".options");
-
     $('.begin a').click(function(){
         $('.page').hide();
         $('#vote-page').show();
         $( "#tpl-vote-page-option" ).tmpl({options:options}).appendTo(".options");
     });
 
-    $('.results a').click(function(){
+
+    //
+    // wire up vote-page
+    $('.range-span').live('change', function() {
+        var value = $(this).val();
+        $('.'+$(this).attr('data-span')).html(value);
+    });
+    $('.go-pie').click(function(){
         var choices = [];
         for(var i=0; i<=7; i++) {
-            choices[choices.length] = $('input[name=category-'+i+']:checked').val();
+            choices[choices.length] = $('input[name=category-'+i+']').val();
         }
+
         var member_name = $('#member-name').val();
         bucket.update('user.'+member_name, {scores: choices});
-
         users[member_name] = {scores: choices};
         draw_pie(options);
 
         $('.page').hide();
         $('#pie-page').show();
     });
-
-    $('.go-vote').click(function(){
-        $('.page').hide();
-        $('#vote-page').show();
-    });
-
-
-    function draw_pie(options) {
-        $("#pie-users").html('');
-        $( "#tpl-pie-users" ).tmpl({users:_.keys(users)}).appendTo("#pie-users");
-
-        var slice_spacing = .00;
-        var w = 450,
-            h = 450,
-            r = Math.min(w, h) / 2,
-            color = d3.scale.category20(),
-            donut = d3.layout.pie(),
-            arc = d3.svg.arc().innerRadius(r * .90).outerRadius(r);
-
-        $("#the-pie").html('');
-        var vis = d3.select("#the-pie")
-          .append("svg:svg")
-            .data([options])
-            .attr("width", 800)
-            .attr("height", 600);
-
-        var arcs = vis.selectAll("g.arc")
-            .data(donut)
-          .enter().append("svg:g")
-            .attr("class", "arc")
-            .attr("transform", function(d,i) {
-                var xoffset = r+20;
-                var yoffset = r+20;
-                xoffset += 5 * Math.sin((i+.5)*((Math.PI*2)/8));
-                yoffset += -5 * Math.cos((i+.5)*((Math.PI*2)/8));
-                return "translate(" + xoffset + "," + yoffset + ")";
-            });
-
-        var category_colors = [
-            "#000",
-            "#000",
-            "#000",
-            "#000",
-            "#000",
-            "#000",
-            "#000",
-            "#000",
-        ];
-        arcs.append("svg:path")
-            .attr("fill", function(d, i) { return category_colors[i]; })
-            .attr("id", function(d, i) { return "slice-" + i })
-            .attr("d", function(d, i) {
-                var a = ((Math.PI*2)/8);
-                return arc
-                    .startAngle((i*a)+slice_spacing)
-                    .endAngle(((i+1)*a) -slice_spacing)
-                    ();
-                });
-        arcs.append("svg:text")
-            .attr("fill", "#FFF")
-            .attr("dy", "1.3em")
-            .attr("text-anchor", "middle")
-                .append("svg:textPath")
-                    .attr("xlink:href", function(d,i) { return "#slice-" + i; })
-                    .attr("startOffset", "22%")
-                    .text(function(d, i) { return options[i]; });
-
-        for(var level=4; level>0; level--) {
-            var offset = -.2 + (level*.2)
-            var depth = .18 + offset;
-            if(level==4) depth += .1;
-            arcs.append("svg:path")
-                .attr("fill", function(d, i) { return '#000'; })
-                .attr("fill-opacity", function(d, i) {
-                    return weight(i, level);
-                })
-                .attr("d", function(d, i) {
-                    var a = ((Math.PI*2)/8);
-                    return d3.svg.arc()
-                        .innerRadius(r * offset)
-                        .outerRadius(r * depth)
-                        .startAngle((i*a)+slice_spacing)
-                        .endAngle(((i+1)*a) -slice_spacing)
-                        ();
-                });
-        }
-    } // end draw pie
 });
 </script>
 
