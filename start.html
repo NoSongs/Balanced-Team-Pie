@@ -174,7 +174,6 @@
 						<input id="member-name" placeholder="Your Name" class="span9" type="text"></input>
 							<br />
 							<br/>
-							<h3>How would you rate you ability in these areas?</h3>
 							<div class="options"></div>
 							<script type="text/javascript">
 								function showValue(newValue)
@@ -203,12 +202,16 @@
         {{/each}}
     </script>
     <div class="page" id="pie-page">
-        <a style="position:absolute; margin-left:0px; margin-top:0px"
-            href="javascript: void(0);" class="btn primary go-vote">Change your scores</a>
-        <div id="pie-users" style="position:absolute; margin-left:0px; margin-top:60px">
-        </div>
-        <div id="the-pie">
-        </div>
+	<div class="row">
+		<div class="span17">
+			<div id="the-pie"></div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="span17">
+			<div id="pie-users" style="position:absolute; margin-left:0px; margin-top:60px"></div>
+		</div>
+	</div>
     </div>
     <!-- pie page end -->
 
