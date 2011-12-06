@@ -181,6 +181,10 @@ body {
   color: #454545;
 }
 
+.team-select-selected {
+  border: 5px solid blue;
+}
+
 .container {
   width: 960px;
   margin: 20px auto;
