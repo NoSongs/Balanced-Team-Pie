@@ -36,6 +36,24 @@
 </head>
 <body>
 <div class="container">
+
+    <!-- splash-page begin -->
+    <div class="page" id="splash-page">
+        <div class="row home">
+            <div class="span9">
+                <h1>Balanced Team Pie</h1>
+                <p>Identify the most critical skills needed for your team and your product to be successful.</p>
+                <p>Create a visualization that clearly shows what skills are present in the team, where there are overlaps and where there are gaps.</p>
+                <p class="home-actions"><a class="btn primary large" href="/start.html">Start A New Team Pie</a> <span>or</span> <a href="/existing.html" class="btn secondary large">Join Your Team In Progress</a></p>
+            </div>
+            <div class="span7 home-pie">
+            </div>
+        </div>
+    </div>
+    <!-- splash-page end -->
+
+
+    <!-- start-page begin -->
 	<div class="page" id="start-page">
 		<div class="row info">
 			<div class="span2">
@@ -81,27 +99,29 @@
 			</div>
 		</div>
 	</div>
-        <script>
-        $(document).ready(function(){
-            var team_select_background = $('.team-select').css('background-color');
-            var company_name, team_type;
-            function show_next() {
-                $('.next').show();
-            }
-            $('.team-select').click(function(){
-                $('.team-select').css('background-color', team_select_background);
-                $(this).css('background-color', 'yellow');
-                show_next();
-            });
-            $('.next a').click(function(){
-                $('.page').hide();
-                $('#code-page').show();
-                $('.company-name').html($('#company-name').val());
-            });
+    <!-- start-page end -->
+    <script>
+    $(document).ready(function(){
+        var team_select_background = $('.team-select').css('background-color');
+        var company_name, team_type;
+        function show_next() {
+            $('.next').show();
+        }
+        $('.team-select').click(function(){
+            $('.team-select').css('background-color', team_select_background);
+            $(this).css('background-color', 'yellow');
+            show_next();
         });
-        </script>
-</div><!-- start-page -->
-<div class="container">
+        $('.next a').click(function(){
+            $('.page').hide();
+            $('#code-page').show();
+            $('.company-name').html($('#company-name').val());
+        });
+    });
+    </script>
+
+
+    <!-- code-page begin -->
 	<div class="page" id="code-page">
 		<div class="row info">
 			<div class="span2">
@@ -127,8 +147,10 @@
 			</div>
 		</div>
 	</div>
-</div><!-- code page-->
-<!-- vote page-->
+    <!-- code page end -->
+
+
+    <!-- vote page begin -->
     <script id="tpl-vote-page-option" type="text/x-jquery-tmpl">
         {{each options}}
         <div class="radio-inputs">
@@ -141,7 +163,6 @@
 	</div>
         {{/each}}
     </script>
-<div class="container">
     <div class="page" id="vote-page">
 	<div class="row info">
 		<div class="span2">
@@ -176,8 +197,11 @@
 				</div>
 			</div>
 	</div>
-    </div><!-- vote page-->
+    </div>
+    <!-- vote page end -->
 
+
+    <!-- pie page begin -->
     <script id="tpl-pie-users" type="text/x-jquery-tmpl">
         {{each users}}
         <div>
@@ -192,7 +216,8 @@
         </div>
         <div id="the-pie">
         </div>
-    </div><!-- pie page-->
+    </div>
+    <!-- pie page end -->
 
 </div>
 
