@@ -189,7 +189,7 @@
     </script>
     <div class="page" id="vote-page" style="display:none;">
 	<div class="row info">
-		<div class="span2">
+		<div class="span2 step-count">
 			<h1>3</h1>
 		</div>
 		<div class="span13">
@@ -377,6 +377,7 @@ function initialized(){
             return;
         }
         $('.page').hide();
+        $('#vote-page .step-count h1').html('2');
         $('#vote-page').show();
     }
 }
