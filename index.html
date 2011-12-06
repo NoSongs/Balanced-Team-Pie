@@ -189,7 +189,7 @@
     </script>
     <div class="page" id="vote-page" style="display:none;">
 	<div class="row info">
-		<div class="span2">
+		<div class="span2 step-count">
 			<h1>3</h1>
 		</div>
 		<div class="span13">
@@ -214,7 +214,7 @@
                     <br/>
                     <div class="options"></div>
                     <br/>
-                    <a href="javascript: void(0);"
+                    <a href="javascript: void(0);" style="display:none;"
                         class="btn large primary go-pie">See Results</a>
                 </div>
             </div>
@@ -377,6 +377,7 @@ function initialized(){
             return;
         }
         $('.page').hide();
+        $('#vote-page .step-count h1').html('2');
         $('#vote-page').show();
     }
 }
@@ -539,6 +540,13 @@ $(document).ready(function(){
 
     //
     // wire up vote-page
+    $('#member-name').keyup(function(){
+        if($('#member-name').val()) {
+            $('.go-pie').show();
+            return;
+        }
+        $('.go-pie').hide();
+    });
     $('.range-span').live('change', function() {
         var value = $(this).val();
         $('.'+$(this).attr('data-span')).html(value);
