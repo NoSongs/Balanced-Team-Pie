@@ -145,11 +145,8 @@
         {{each options}}
         <div class="radio-inputs">
             <h5>${$value}</h5>
-		<input type="radio" name="category-${$index}" value="0" /><span>0</span>
-		<input type="radio" name="category-${$index}" value="1" /><span>1</span>
-		<input type="radio" name="category-${$index}" value="2" /><span>2</span>
-		<input type="radio" name="category-${$index}" value="3" /><span>3</span>
-		<input type="radio" name="category-${$index}" value="4" /><span>4</span>
+		<input  class="range-span" type="range" min="0" max="4" value="0" step="1" onchange="showValue(this.value)">
+		<span id="range" class="range-text">0</span>
 	</div>
         {{/each}}
     </script>
@@ -179,6 +176,12 @@
 							<br/>
 							<h3>How would you rate you ability in these areas?</h3>
 							<div class="options"></div>
+							<script type="text/javascript">
+								function showValue(newValue)
+									{
+										document.getElementById("range").innerHTML=newValue;
+									}
+							</script>
 							<br/>
 							<div class="results">
 								<a href="javascript: void(0);" class="btn large primary">See Results</a>
