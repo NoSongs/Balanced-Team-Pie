@@ -181,10 +181,6 @@ body {
   color: #454545;
 }
 
-.team-select-selected {
-  border: 5px solid blue;
-}
-
 .container {
   width: 960px;
   margin: 20px auto;
@@ -333,6 +329,10 @@ body {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f3f3f3', endColorstr='#eaeaea', GradientType=0);
   text-align: center;
   margin: 0 0 0 20px;
+}
+
+.team-select-selected {
+  border: 4px solid #00AEEF;
 }
 
 .team-select h4 {
