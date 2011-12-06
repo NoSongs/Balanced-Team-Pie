@@ -179,9 +179,12 @@
         {{each options}}
         <div class="range-inputs">
             <h5>${$value}</h5>
-		<span id="range" class="range-text">0</span>
-		<input  class="range-span" type="range" min="0" max="4" value="0" step="1" onchange="showValue(this.value)">
-	</div>
+            <span class="range-text category-value-${$index}">0</span>
+            <input class="range-span"
+                data-span="category-value-${$index}"
+                name="category-${$index}" type="range" min="0" max="4" value="0"
+                step="1"></input>
+	    </div>
         {{/each}}
     </script>
     <div class="page" id="vote-page">
@@ -216,9 +219,8 @@
 									}
 							</script>
 							<br/>
-							<div class="results">
-								<a href="javascript: void(0);" class="btn large primary">See Results</a>
-							</div>
+                            <a href="javascript: void(0);"
+                                class="btn large primary go-pie">See Results</a>
 					</div>
 				</div>
 			</div>
@@ -522,35 +524,36 @@ $(document).ready(function(){
         start_simperium(code);
     });
 
-    $( "#tpl-vote-page-option" ).tmpl({options:options}).appendTo(".options");
 
+
+    $( "#tpl-vote-page-option" ).tmpl({options:options}).appendTo(".options");
     $('.begin a').click(function(){
         $('.page').hide();
         $('#vote-page').show();
         $( "#tpl-vote-page-option" ).tmpl({options:options}).appendTo(".options");
     });
 
-    $('.results a').click(function(){
+
+    //
+    // wire up vote-page
+    $('.range-span').live('change', function() {
+        var value = $(this).val();
+        $('.'+$(this).attr('data-span')).html(value);
+    });
+    $('.go-pie').click(function(){
         var choices = [];
         for(var i=0; i<=7; i++) {
-            choices[choices.length] = $('input[name=category-'+i+']:checked').val();
+            choices[choices.length] = $('input[name=category-'+i+']').val();
         }
+
         var member_name = $('#member-name').val();
         bucket.update('user.'+member_name, {scores: choices});
-
         users[member_name] = {scores: choices};
         draw_pie(options);
 
         $('.page').hide();
         $('#pie-page').show();
     });
-
-    $('.go-vote').click(function(){
-        $('.page').hide();
-        $('#vote-page').show();
-    });
-
-
 });
 </script>
 
