@@ -90,7 +90,7 @@
 					<div class="span9-half">
 						<h3>Choose Your Team's Project Type:</h3>
 						<br />
-						<div class="team-select tech">
+						<div class="team-select tech team-select-selected">
 							<h4>Tech Startup</h4>
 						</div>
 						<div class="team-select circus">
@@ -475,6 +475,9 @@ function draw_pie(options) {
 
 
 $(document).ready(function(){
+    // XXX - this should happen once options are known
+    $( "#tpl-vote-page-option" ).tmpl({options:options}).appendTo(".options");
+
     //
     // wire up splash-page
     $('.go-create').click(function(){
@@ -495,8 +498,7 @@ $(document).ready(function(){
         $('.next').show();
     }
     $('.team-select').click(function(){
-        $('.team-select').css('background-color', team_select_background);
-        $(this).css('background-color', 'yellow');
+        $(this).addClass('team-select-selected');
         show_next();
     });
     $('.go-code').click(function(){
@@ -521,11 +523,9 @@ $(document).ready(function(){
 
 
 
-    $( "#tpl-vote-page-option" ).tmpl({options:options}).appendTo(".options");
     $('.begin a').click(function(){
         $('.page').hide();
         $('#vote-page').show();
-        $( "#tpl-vote-page-option" ).tmpl({options:options}).appendTo(".options");
     });
 
 
