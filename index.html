@@ -90,7 +90,7 @@
 					<div class="span9-half">
 						<h3>Choose Your Team's Project Type:</h3>
 						<br />
-						<div class="team-select tech team-select-selected">
+						<div class="team-select tech">
 							<h4>Tech Startup</h4>
 						</div>
 						<div class="team-select circus">
@@ -104,7 +104,7 @@
 				<br />
 				<div class="row">
 					<div class="span9">
-                        <a href="javascript: void(0);"
+                        <a href="javascript: void(0);" style="display:none;"
                             class="btn large primary go-code">Next</a>
 					</div>
 				</div>
@@ -492,14 +492,22 @@ $(document).ready(function(){
 
     //
     // wire up create-page
-    var team_select_background = $('.team-select').css('background-color');
-    var company_name, team_type;
-    function show_next() {
-        $('.next').show();
+    var team_selected = false;
+    function maybe_show_team_next() {
+        if(team_selected && $('#company-name').val()) {
+            $('.go-code').show();
+            return;
+        }
+        $('.go-code').hide();
     }
+    $('#company-name').keyup(function(){
+        maybe_show_team_next();
+    });
     $('.team-select').click(function(){
+        $('.team-select').removeClass('team-select-selected');
         $(this).addClass('team-select-selected');
-        show_next();
+        team_selected = true;
+        maybe_show_team_next();
     });
     $('.go-code').click(function(){
         var code = make_code();
