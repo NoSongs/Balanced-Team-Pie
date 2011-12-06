@@ -232,7 +232,20 @@
         </div>
         {{/each}}
     </script>
-    <div class="page" id="pie-page" style="display:none;">
+
+    <script id="tpl-final-sub" type="text/x-jquery-tmpl">
+        {{each options}}
+			<div class="row final-sub">
+				<div class="span-one-third">
+					<h3>${$value}</h3>
+				</div>
+				<div class="span2">
+					<h3 class="final-sum">${overlap($index)}%</h3>
+				</div>
+			</div>
+        {{/each}}
+    </script>
+    <div class="page" id="pie-page">
 	<div class="row">
 		<div class="span8 final-overlap">
 			<div class="row">
@@ -240,73 +253,10 @@
 					<h1>Competency Overlap</h1>
 				</div>
 				<div class="span2">
-					<h1 class="final-sum">50%</h1>
+					<h1 class="final-sum final-final-sum">50%</h1>
 				</div>
 			</div>
-			<div class="row final-sub">
-				<div class="span-one-third">
-					<h3>Knife Target</h3>
-				</div>
-				<div class="span2">
-					<h3 class="final-sum">50%</h3>
-				</div>
-			</div>
-			<div class="row final-sub">
-				<div class="span-one-third">
-					<h3>Juggling</h3>
-				</div>
-				<div class="span2">
-					<h3 class="final-sum">50%</h3>
-				</div>
-			</div>
-			<div class="row final-sub">
-				<div class="span-one-third">
-					<h3>Mini Car Driving</h3>
-				</div>
-				<div class="span2">
-					<h3 class="final-sum">50%</h3>
-				</div>
-			</div>
-			<div class="row final-sub">
-				<div class="span-one-third">
-					<h3>Tightrope Walking</h3>
-				</div>
-				<div class="span2">
-					<h3 class="final-sum">50%</h3>
-				</div>
-			</div>
-			<div class="row final-sub">
-				<div class="span-one-third">
-					<h3>Lion Taming</h3>
-				</div>
-				<div class="span2">
-					<h3 class="final-sum">50%</h3>
-				</div>
-			</div>
-			<div class="row final-sub">
-				<div class="span-one-third">
-					<h3>Fire Breathing</h3>
-				</div>
-				<div class="span2">
-					<h3 class="final-sum">50%</h3>
-				</div>
-			</div>
-			<div class="row final-sub">
-				<div class="span-one-third">
-					<h3>Curiously Deformed</h3>
-				</div>
-				<div class="span2">
-					<h3 class="final-sum">50%</h3>
-				</div>
-			</div>
-			<div class="row final-sub">
-				<div class="span-one-third">
-					<h3>Knife Throwing</h3>
-				</div>
-				<div class="span2">
-					<h3 class="final-sum">50%</h3>
-				</div>
-			</div>
+            <div class="final-sub-tpl-target"></div>
 		</div>
 		<div class="span8">
 			<div id="the-pie" class="poop"></div>
@@ -355,6 +305,19 @@ function weight(category, level) {
     return ret;
 }
 
+function overlap(category) {
+    var num_users = _.keys(users).length;
+    var percent = 0;
+    _.each(_.values(users), function (x) {
+        var score = x['scores'][category];
+        if(score > 0) {
+            percent += score/4/num_users;
+        }
+    });
+    percent = Math.round(percent*100);
+    return percent;
+}
+
 // SIMPERIUM
 function start_simperium(code) {
     SIMPERIUM_OPTS = {
@@ -396,6 +359,16 @@ function notify(id, data) {
 function draw_pie(options) {
     $("#pie-users").html('');
     $( "#tpl-pie-users" ).tmpl({users:_.keys(users)}).appendTo("#pie-users");
+
+    $(".final-sub-tpl-target").html('');
+    $( "#tpl-final-sub" ).tmpl({users:_.keys(users)}).appendTo(".final-sub-tpl-target");
+
+    var total = 0;
+    for (var i=0; i<8; i++) {
+        total += overlap(i);
+    }
+    total = Math.round(total/8);
+    $('.final-final-sum').html(total+'%');
 
     var slice_spacing = .00;
     var w = 450,
