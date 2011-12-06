@@ -131,7 +131,7 @@
 					<div class="span9-half">
 						<h3>Here's The Access Code For Your Team To Join In:</h3>
 						<br />
-						<h1 class="access-code-big">X 9 L o</h1>
+						<h1 class="access-code-big">X9Lo</h1>
 						<br />
 						<div class="begin">
 							<a href="javascript: void(0);" class="btn large primary">Begin</a>
@@ -177,13 +177,10 @@
     <!-- vote page begin -->
     <script id="tpl-vote-page-option" type="text/x-jquery-tmpl">
         {{each options}}
-        <div class="radio-inputs">
+        <div class="range-inputs">
             <h5>${$value}</h5>
-		<input type="radio" name="category-${$index}" value="0" /><span>0</span>
-		<input type="radio" name="category-${$index}" value="1" /><span>1</span>
-		<input type="radio" name="category-${$index}" value="2" /><span>2</span>
-		<input type="radio" name="category-${$index}" value="3" /><span>3</span>
-		<input type="radio" name="category-${$index}" value="4" /><span>4</span>
+		<span id="range" class="range-text">0</span>
+		<input  class="range-span" type="range" min="0" max="4" value="0" step="1" onchange="showValue(this.value)">
 	</div>
         {{/each}}
     </script>
@@ -211,8 +208,13 @@
 						<input id="member-name" placeholder="Your Name" class="span9" type="text"></input>
 							<br />
 							<br/>
-							<h3>How would you rate you ability in these areas?</h3>
 							<div class="options"></div>
+							<script type="text/javascript">
+								function showValue(newValue)
+									{
+										document.getElementById("range").innerHTML=newValue;
+									}
+							</script>
 							<br/>
 							<div class="results">
 								<a href="javascript: void(0);" class="btn large primary">See Results</a>
@@ -234,12 +236,90 @@
         {{/each}}
     </script>
     <div class="page" id="pie-page">
-        <a style="position:absolute; margin-left:0px; margin-top:0px"
-            href="javascript: void(0);" class="btn primary go-vote">Change your scores</a>
-        <div id="pie-users" style="position:absolute; margin-left:0px; margin-top:60px">
-        </div>
-        <div id="the-pie">
-        </div>
+	<div class="row">
+		<div class="span8 final-overlap">
+			<div class="row">
+				<div class="span-one-third">
+					<h1>Competency Overlap</h1>
+				</div>
+				<div class="span2">
+					<h1 class="final-sum">50%</h1>
+				</div>
+			</div>
+			<div class="row final-sub">
+				<div class="span-one-third">
+					<h3>Knife Target</h3>
+				</div>
+				<div class="span2">
+					<h3 class="final-sum">50%</h3>
+				</div>
+			</div>
+			<div class="row final-sub">
+				<div class="span-one-third">
+					<h3>Juggling</h3>
+				</div>
+				<div class="span2">
+					<h3 class="final-sum">50%</h3>
+				</div>
+			</div>
+			<div class="row final-sub">
+				<div class="span-one-third">
+					<h3>Mini Car Driving</h3>
+				</div>
+				<div class="span2">
+					<h3 class="final-sum">50%</h3>
+				</div>
+			</div>
+			<div class="row final-sub">
+				<div class="span-one-third">
+					<h3>Tightrope Walking</h3>
+				</div>
+				<div class="span2">
+					<h3 class="final-sum">50%</h3>
+				</div>
+			</div>
+			<div class="row final-sub">
+				<div class="span-one-third">
+					<h3>Lion Taming</h3>
+				</div>
+				<div class="span2">
+					<h3 class="final-sum">50%</h3>
+				</div>
+			</div>
+			<div class="row final-sub">
+				<div class="span-one-third">
+					<h3>Fire Breathing</h3>
+				</div>
+				<div class="span2">
+					<h3 class="final-sum">50%</h3>
+				</div>
+			</div>
+			<div class="row final-sub">
+				<div class="span-one-third">
+					<h3>Curiously Deformed</h3>
+				</div>
+				<div class="span2">
+					<h3 class="final-sum">50%</h3>
+				</div>
+			</div>
+			<div class="row final-sub">
+				<div class="span-one-third">
+					<h3>Knife Throwing</h3>
+				</div>
+				<div class="span2">
+					<h3 class="final-sum">50%</h3>
+				</div>
+			</div>
+		</div>
+		<div class="span8">
+			<div id="the-pie" class="poop"></div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="span17">
+			<div id="pie-users"></div>
+		</div>
+	</div>
     </div>
     <!-- pie page end -->
 
@@ -412,7 +492,7 @@ $(document).ready(function(){
           .enter().append("svg:g")
             .attr("class", "arc")
             .attr("transform", function(d,i) {
-                var xoffset = r+200;
+                var xoffset = r+20;
                 var yoffset = r+20;
                 xoffset += 5 * Math.sin((i+.5)*((Math.PI*2)/8));
                 yoffset += -5 * Math.cos((i+.5)*((Math.PI*2)/8));
@@ -421,13 +501,13 @@ $(document).ready(function(){
 
         var category_colors = [
             "#000",
-            "#73a",
-            "#345",
-            "#83b",
-            "#222",
-            "#00F",
-            "#A22",
-            "#0F0",
+            "#000",
+            "#000",
+            "#000",
+            "#000",
+            "#000",
+            "#000",
+            "#000",
         ];
         arcs.append("svg:path")
             .attr("fill", function(d, i) { return category_colors[i]; })
@@ -441,7 +521,7 @@ $(document).ready(function(){
                 });
         arcs.append("svg:text")
             .attr("fill", "#FFF")
-            .attr("dy", "1.0em")
+            .attr("dy", "1.3em")
             .attr("text-anchor", "middle")
                 .append("svg:textPath")
                     .attr("xlink:href", function(d,i) { return "#slice-" + i; })

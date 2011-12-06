@@ -198,20 +198,66 @@ body {
   border-top: 1px solid #ccc;
 }
 
+.final-sub {
+  border-top: 1px solid #ccc;
+}
+
+.final-sum {
+  float: right;
+  font-family: Georgia, serif;
+}
+
+.final-overlap {
+  font-family: "HelveticaNeue-BoldCondensed", "HelveticaNeue-CondensedBold", "Helvetica Neue Bold Condensed", "Helvetica Neue", "Arial Narrow", "Arial", sans-serif;
+  font-size: 58px;
+  font-weight: 800;
+  font-stretch: condensed;
+  text-transform: uppercase;
+  margin: 60px 0 0 0;
+  
+}
+
 .options span {
   margin: 0 20px 0 0;
   padding: 0 0 0 10px;
   font-weight: 600;
 }
 
-.radio-inputs {
+.range-inputs {
   margin: 0 0 5px 0;
   padding: 0 0 5px 0;
   border-bottom: 1px solid #ccc;
+  height: 40px;
+}
+
+.range-inputs h5 {
+  float: left;
 }
 
 .home {
   margin: 60px 0 0 0;
+}
+
+.range-inputs input {
+  float: right;
+  margin: 0 20px 0 0;
+}
+
+.range-inputs span {
+  float: right;
+  margin: 7px 0 0 0;
+  font-size: 24px;
+}
+
+.poop {
+  font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  font-stretch: condensed;
+  text-transform: uppercase;
+  letter-spacing: .1em
+  
+  
 }
 
 .home h1 {
@@ -258,6 +304,7 @@ body {
   font-size: 100px;
   font-family: "HelveticaNeue-BoldCondensed", "HelveticaNeue-CondensedBold", "Helvetica Neue Bold Condensed", "Helvetica Neue", "Arial Narrow", "Arial", sans-serif; 
   margin: 40px 0;
+  letter-spacing: .3em
 }
 
 .info {
