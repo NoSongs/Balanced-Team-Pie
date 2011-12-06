@@ -204,14 +204,25 @@ body {
   font-weight: 600;
 }
 
-.radio-inputs {
+.range-inputs {
   margin: 0 0 5px 0;
   padding: 0 0 5px 0;
   border-bottom: 1px solid #ccc;
+  height: 40px;
+}
+
+.range-inputs h5 {
+  float: left;
 }
 
 .home {
   margin: 60px 0 0 0;
+}
+
+.range-inputs span {
+  float: right;
+  margin: 5px 0 0 0;
+  font-size: 24px;
 }
 
 .home h1 {
