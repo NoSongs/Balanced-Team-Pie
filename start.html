@@ -42,9 +42,18 @@
         <div class="row home">
             <div class="span9">
                 <h1>Balanced Team Pie</h1>
-                <p>Identify the most critical skills needed for your team and your product to be successful.</p>
-                <p>Create a visualization that clearly shows what skills are present in the team, where there are overlaps and where there are gaps.</p>
-                <p class="home-actions"><a class="btn primary large" href="/start.html">Start A New Team Pie</a> <span>or</span> <a href="/existing.html" class="btn secondary large">Join Your Team In Progress</a></p>
+                <p>Identify the most critical skills needed for your team and
+                your product to be successful.</p>
+                <p>Create a visualization that clearly shows what skills are
+                present in the team, where there are overlaps and where there
+                are gaps.</p>
+                <p class="home-actions go-create">
+                    <a class="btn primary large"
+                        href="javascript: void(0);">Start A New Team Pie</a>
+                    <span>or</span>
+                    <a href="javascript: void(0);"
+                        class="btn secondary large">Join Your Team In Progress</a>
+                </p>
             </div>
             <div class="span7 home-pie">
             </div>
@@ -100,25 +109,6 @@
 		</div>
 	</div>
     <!-- start-page end -->
-    <script>
-    $(document).ready(function(){
-        var team_select_background = $('.team-select').css('background-color');
-        var company_name, team_type;
-        function show_next() {
-            $('.next').show();
-        }
-        $('.team-select').click(function(){
-            $('.team-select').css('background-color', team_select_background);
-            $(this).css('background-color', 'yellow');
-            show_next();
-        });
-        $('.next a').click(function(){
-            $('.page').hide();
-            $('#code-page').show();
-            $('.company-name').html($('#company-name').val());
-        });
-    });
-    </script>
 
 
     <!-- code-page begin -->
@@ -244,6 +234,30 @@ function weight(category, level) {
 
 $(document).ready(function(){
 
+    $('.go-create').click(function(){
+        $('.page').hide();
+        $('#start-page').show();
+    });
+
+
+    // wire up create-page
+    var team_select_background = $('.team-select').css('background-color');
+    var company_name, team_type;
+    function show_next() {
+        $('.next').show();
+    }
+    $('.team-select').click(function(){
+        $('.team-select').css('background-color', team_select_background);
+        $(this).css('background-color', 'yellow');
+        show_next();
+    });
+
+    $('.next a').click(function(){
+        $('.page').hide();
+        $('#code-page').show();
+        $('.company-name').html($('#company-name').val());
+    });
+
     SIMPERIUM_OPTS = {
         host        : 'apiotra.simperium.com',
         port        : '80',
@@ -338,8 +352,18 @@ $(document).ready(function(){
                 return "translate(" + xoffset + "," + yoffset + ")";
             });
 
+        var category_colors = [
+            "#000",
+            "#73a",
+            "#345",
+            "#83b",
+            "#222",
+            "#00F",
+            "#A22",
+            "#0F0",
+        ];
         arcs.append("svg:path")
-            .attr("fill", function(d, i) { return '#000'; })
+            .attr("fill", function(d, i) { return category_colors[i]; })
             .attr("id", function(d, i) { return "slice-" + i })
             .attr("d", function(d, i) {
                 var a = ((Math.PI*2)/8);
