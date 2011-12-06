@@ -47,12 +47,12 @@
                 <p>Create a visualization that clearly shows what skills are
                 present in the team, where there are overlaps and where there
                 are gaps.</p>
-                <p class="home-actions go-create">
-                    <a class="btn primary large"
+                <p class="home-actions">
+                    <a class="btn primary large go-create"
                         href="javascript: void(0);">Start A New Team Pie</a>
                     <span>or</span>
                     <a href="javascript: void(0);"
-                        class="btn secondary large">Join Your Team In Progress</a>
+                        class="btn secondary large go-join">Join Your Team In Progress</a>
                 </p>
             </div>
             <div class="span7 home-pie">
@@ -69,16 +69,20 @@
 				<h1>1</h1>
 			</div>
 			<div class="span13">
-				<p>The first task is to choose a list of areas of competency that you need to make your 
-				product successful. Keep it at a fairly high-level, like Code Development, UX 
-				Design, Marketing or Accounting.</p>
+                <p>The first task is to choose a list of areas of competency
+                that you need to make your product successful. Keep it at a
+                fairly high-level, like Code Development, UX Design, Marketing
+                or Accounting.</p>
 			</div>
 		</div>
 		<div class="container-small cell">
 			<div class="content">
 				<div class="row">
 					<div class="span4">
-						<div class="clearfix"><input id="company-name" class="span9" placeholder="Company or Project Name" type="text"></input></div>
+						<div class="clearfix">
+                            <input id="company-name" class="span9"
+                                placeholder="Company or Project Name" type="text"></input>
+                        </div>
 					</div>	
 				</div>
 				<br />
@@ -100,9 +104,8 @@
 				<br />
 				<div class="row">
 					<div class="span9">
-						<div class="next" style="display:none;">
-							<a href="javascript: void(0);" class="btn large primary">Next</a>
-						</div>
+                        <a href="javascript: void(0);"
+                            class="btn large primary go-code">Next</a>
 					</div>
 				</div>
 			</div>
@@ -118,7 +121,8 @@
 				<h1>2</h1>
 			</div>
 			<div class="span13">
-				<p>Congratulations!  You've created a new Balanced Team Pie for <span class="company-name">Foo</span></p>
+                <p>Congratulations!  You've created a new Balanced Team Pie for
+                    <span class="company-name">Foo</span></p>
 			</div>
 		</div>
 		<div class="container-small cell">
@@ -138,6 +142,36 @@
 		</div>
 	</div>
     <!-- code page end -->
+
+
+    <!-- join-page begin -->
+	<div class="page" id="join-page">
+		<div class="row info">
+			<div class="span2">
+				<h1>1</h1>
+			</div>
+			<div class="span13">
+                <p>Welcome.</p>
+			</div>
+		</div>
+		<div class="container-small cell">
+			<div class="content">
+				<div class="row">
+					<div class="span9-half">
+						<h3>Enter the access code to join</h3>
+						<br />
+                        <p class="join-page-error">
+                        </p>
+						<br />
+                        <input type="text"></input>
+						<br />
+                        <a href="javascript: void(0);" class="btn large primary">Join</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+    <!-- join-page end -->
 
 
     <!-- vote page begin -->
@@ -214,11 +248,23 @@
 <script>
 var bucket;
 var users = {};
+var code;
+var state;
 
+var options = [
+    "Juggling",
+    "Mini car driving",
+    "Tightrope walking",
+    "Lion taming",
+    "Fire breathing",
+    "Curiously deformed",
+    "Knife throwing",
+    "Knife target",
+    ];
 
 function make_code() {
     var text = "";
-    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    var possible = "abcdefghijklmnopqrstuvwxyz0123456789";
     for(var i=0; i < 4; i++)
         text += possible.charAt(Math.floor(Math.random() * possible.length));
     return text;
@@ -232,14 +278,56 @@ function weight(category, level) {
     return ret;
 }
 
-$(document).ready(function(){
+// SIMPERIUM
+function start_simperium(code) {
+    SIMPERIUM_OPTS = {
+        host        : 'apiotra.simperium.com',
+        port        : '80',
+        token       : '991a75556cc14e4b8b556d8cb67feb55'
+    };
 
+    bucket = new Simperium('app-society-569', code, SIMPERIUM_OPTS);
+    bucket.set_get_data(get_data);
+    bucket.set_notify(notify);
+    bucket.set_initialized(initialized);
+    bucket.initialize_client();
+    bucket.start();
+}
+function initialized(){
+    if(state=="join") {
+        if(bucket.data.p == "0") {
+            $('.join-page-error').html('bad code');
+            return;
+        }
+        $('.page').hide();
+        $('#vote-page').show();
+    }
+}
+function get_data(id) {return null;}
+function notify(id, data) {
+    console.log(id);
+    console.log(data);
+    if(id.substr(0,5) == 'user.') {
+        users[id.substr(5)] = data;
+        draw_pie(options);
+    }
+}
+//
+
+$(document).ready(function(){
+    //
+    // wire up splash-page
     $('.go-create').click(function(){
         $('.page').hide();
         $('#start-page').show();
     });
+    $('.go-join').click(function(){
+        state = "join";
+        $('.page').hide();
+        $('#join-page').show();
+    });
 
-
+    //
     // wire up create-page
     var team_select_background = $('.team-select').css('background-color');
     var company_name, team_type;
@@ -251,47 +339,26 @@ $(document).ready(function(){
         $(this).css('background-color', 'yellow');
         show_next();
     });
+    $('.go-code').click(function(){
+        var code = make_code();
+        $('.access-code-big').html(code);
 
-    $('.next a').click(function(){
+        start_simperium(code);
+
+        bucket.update('company', {'name': $('#company-name').val()});
+        $('.company-name').html($('#company-name').val());
+
         $('.page').hide();
         $('#code-page').show();
-        $('.company-name').html($('#company-name').val());
     });
 
-    SIMPERIUM_OPTS = {
-        host        : 'apiotra.simperium.com',
-        port        : '80',
-        token       : '991a75556cc14e4b8b556d8cb67feb55'
-    };
+    //
+    // wire up join-page
+    $('#join-page a').click(function(){
+        var code = $('#join-page input').val();
+        start_simperium(code);
+    });
 
-    bucket = new Simperium('app-society-569', 'Klmo', SIMPERIUM_OPTS);
-    bucket.set_get_data(get_data);
-    bucket.set_notify(notify);
-    bucket.initialize_client();
-    bucket.start();
-
-    function get_data(id) {
-        return null;
-    }
-    function notify(id, data) {
-        console.log(id);
-        console.log(data);
-        if(id.substr(0,5) == 'user.') {
-            users[id.substr(5)] = data;
-        }
-        draw_pie(options);
-    }
-
-    var options = [
-        "Juggling",
-        "Mini car driving",
-        "Tightrope walking",
-        "Lion taming",
-        "Fire breathing",
-        "Curiously deformed",
-        "Knife throwing",
-        "Knife target",
-        ];
     $( "#tpl-vote-page-option" ).tmpl({options:options}).appendTo(".options");
 
     $('.begin a').click(function(){
