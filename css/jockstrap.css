@@ -1391,6 +1391,12 @@ textarea[readonly] {
   margin-top: 0;
   margin-left: -10px;
 }
+
+.join-page-error {
+    color: red; 
+}
+
+
 .form-stacked .actions {
   margin-left: -20px;
   padding-left: 20px;

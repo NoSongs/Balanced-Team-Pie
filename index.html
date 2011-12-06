@@ -151,7 +151,8 @@
 				<h1>1</h1>
 			</div>
 			<div class="span13">
-                <p>Welcome.</p>
+                <p>Welcome to Balanced Team Pie.</p>
+                <p>This activity identifies the most critical skills needed for your team and your product to be successful.</p>
 			</div>
 		</div>
 		<div class="container-small cell">
@@ -159,15 +160,18 @@
 				<div class="row">
 					<div class="span9-half">
 						<h3>Enter the access code to join</h3>
+                                                <p class="join-page-error"></p>
 						<br />
-                        <p class="join-page-error">
-                        </p>
-						<br />
-                        <input type="text"></input>
-						<br />
-                        <a href="javascript: void(0);" class="btn large primary">Join</a>
+                                                <input class="span3 code-input" type="text"></input>
+
 					</div>
 				</div>
+                                <br />
+                                <div class="row">
+					<div class="span9-half">
+                                            <a href="javascript: void(0);" class="btn large primary">Join</a>
+                                        </div>
+                                </div>
 			</div>
 		</div>
 	</div>
@@ -336,7 +340,7 @@ function start_simperium(code) {
 function initialized(){
     if(state=="join") {
         if(bucket.data.p == "0") {
-            $('.join-page-error').html('bad code');
+            $('.join-page-error').html('Someone lied to you :(');
             return;
         }
         $('.page').hide();
