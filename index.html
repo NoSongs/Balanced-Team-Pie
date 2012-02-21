@@ -26,7 +26,7 @@
     <script type="text/javascript" src="js/d3.layout.js"></script>
 
     <script type="text/javascript" src="js/underscore-min.js"></script>
-    <script type="text/javascript" src="https://simple-note.appspot.com/script/simperium.js"></script>
+    <script type="text/javascript" src="js/simperium-safe.js"></script>
 
     <style type="text/css">
     .team-select {
@@ -324,17 +324,24 @@ function overlap(category) {
 
 // SIMPERIUM
 function start_simperium(code) {
-    SIMPERIUM_OPTS = {
-        host        : 'apiotra.simperium.com',
-        port        : '80',
-        token       : '991a75556cc14e4b8b556d8cb67feb55'
-    };
 
-    bucket = new Simperium('app-society-569', code, SIMPERIUM_OPTS);
-    bucket.set_get_data(get_data);
+    SIMPERIUM_OPTS = {
+        host            : '33.33.33.10',
+        port            : '9999',
+        auth_host       : '33.33.33.10:8888',
+        // client_id    : 'b112c2c457f946938be164e96f1cf979',
+        token           : 'c04614ff415648b0be9db2a80da7af1e',
+        stream_index    : true,
+        nostore         : true,
+        update_delay    : 1,
+    };
+    SIMPERIUM_APP_ID = 'app-specialists-793';
+    bucket = new Simperium(SIMPERIUM_APP_ID, code, SIMPERIUM_OPTS);
+    bucket.login();
+
+    // bucket.set_get_data(get_data);
     bucket.set_notify(notify);
     bucket.set_initialized(initialized);
-    bucket.initialize_client();
     bucket.start();
 }
 function initialized(){
@@ -348,7 +355,10 @@ function initialized(){
         $('#vote-page').show();
     }
 }
-function get_data(id) {return null;}
+function get_data(id) {
+    console.log('ADASDFASFASFASF', id);
+    return {};
+}
 function notify(id, data) {
     console.log(id);
     console.log(data);
