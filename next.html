@@ -20,6 +20,7 @@
 	<![endif]-->
 
     <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.8.17/jquery-ui.min.js"></script>
 
     <script type="text/javascript" src="js/underscore-min.js"></script>
     <script src="js/jquery.address-1.4.js"></script>
@@ -29,19 +30,24 @@
 
     <script src="js/backbone.js"></script>
     <script src="js/backbone-simperium.js"></script>
-    <script type="text/javascript" src="js/simperium-safe.js"></script>
+    <script type="text/javascript" src="js/simperium.js"></script>
     <script type="text/javascript" src="js/balance-team-pie.js"></script>
 
     <style type="text/css">
     .team-select {
         cursor: pointer;
     }
+    .sortable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+    .sortable li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em;
+        font-size: 1.4em; height: 18px; }
+    .sortable li span { position: absolute; margin-left: -1.3em; }
     </style>
 </head>
 <body>
+
 <!-- Templates -->
 <script type="text/template" id="user-template">
-  <div><%= name %></div>
+    <div data-id="<%= id %>"><%= id %>, <%= name %>, <%= order %></div>
 </script>
 
 <div class="container">
@@ -75,7 +81,7 @@
         User List
         <br/>
         <br/>
-        <ul id="user-list"></ul>
+        <ul id="user-list" class="sortable"></ul>
     </div>
     </div>
     <!-- pie-page end -->

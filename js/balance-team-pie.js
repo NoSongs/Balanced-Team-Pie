@@ -22,8 +22,7 @@ var SIMPERIUM_APP_ID = 'app-specialists-793';
 var User = Backbone.Model.extend({
     defaults: function() {
       return {
-        //done:  false,
-        //order: Todos.nextOrder()
+        order: 0
       };
     }
 });
@@ -31,7 +30,11 @@ var User = Backbone.Model.extend({
 
 // User Collection
 var UserCollection = Backbone.SimperiumCollection.extend({
-    model: User
+    model: User,
+    comparator: function(item) {
+        console.log('herk');
+        return item.get('order');
+    }
 });
 
 // Views
@@ -45,9 +48,10 @@ var UserView = Backbone.View.extend({
     },
 
     render: function() {
-      $(this.el).html(this.template(this.model.toJSON()));
-      // this.setText();
-      return this;
+        var data = this.model.toJSON();
+        data['id'] = this.model.id;
+        $(this.el).html(this.template(data));
+        return this;
     }
 });
 
@@ -56,24 +60,34 @@ var PieView = Backbone.View.extend({
     el: $("#pie-page"),
 
     initialize: function() {
-      // this.input    = this.$("#new-todo");
-      userCollection.bind('add',   this.addOne, this);
-      userCollection.bind('reset', this.addAll, this);
-      userCollection.bind('all',   this.render, this);
-      userCollection.fetch();
+        // enable sorting
+        $(".sortable").sortable({
+            update: function(el, ui) {
+                $(this).find('li > div').each(function(i){
+                    var id = $(this).attr('data-id');
+                    item = userCollection.get(id);
+                    if(item.get('order') != i+1) item.set({order: i+1});
+                });
+                // this.save();
+            },
+        });
+        $(".sortable" ).disableSelection();
+
+        userCollection.bind('add',   this.render, this);
+        userCollection.bind('reset', this.render, this);
+        userCollection.bind('all',   this.render, this);
+        userCollection.fetch();
     },
 
     render: function() {
+        $("#user-list").html('');
+        userCollection.each(this.addOne);
     },
 
     addOne: function(user) {
         var view = new UserView({model: user});
         $("#user-list").append(view.render().el);
-    },
-
-    addAll: function() {
-      userCollection.each(this.addOne);
-    },
+    }
 });
 
 
@@ -100,4 +114,5 @@ function start_pie(pie_name) {
             start_pie(pie_name);
         }
     });
+
 });
