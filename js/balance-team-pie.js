@@ -66,16 +66,15 @@ var PieView = Backbone.View.extend({
                 $(this).find('li > div').each(function(i){
                     var id = $(this).attr('data-id');
                     item = userCollection.get(id);
-                    if(item.get('order') != i+1) item.set({order: i+1});
+                    if(item.get('order') != i+1)
+                        item.save({order: i+1});
                 });
-                // this.save();
+                userCollection.sort();
             },
         });
         $(".sortable" ).disableSelection();
 
-        userCollection.bind('add',   this.render, this);
-        userCollection.bind('reset', this.render, this);
-        userCollection.bind('all',   this.render, this);
+        userCollection.bind('all', this.render, this);
         userCollection.fetch();
     },
 
