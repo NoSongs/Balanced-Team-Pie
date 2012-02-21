@@ -31,8 +31,13 @@ var User = Backbone.Model.extend({
 // User Collection
 var UserCollection = Backbone.SimperiumCollection.extend({
     model: User,
+    initialize: function(models, options) {
+        this.bind('change:order', function(){
+            this.sort()
+        }, this);
+        Backbone.SimperiumCollection.prototype.initialize.call(this, models, options);
+    },
     comparator: function(item) {
-        console.log('herk');
         return item.get('order');
     }
 });
@@ -41,12 +46,6 @@ var UserCollection = Backbone.SimperiumCollection.extend({
 var UserView = Backbone.View.extend({
     tagName:  "li",
     template: _.template($('#user-template').html()),
-
-    initialize: function() {
-      this.model.bind('change', this.render, this);
-      this.model.bind('destroy', this.remove, this);
-    },
-
     render: function() {
         var data = this.model.toJSON();
         data['id'] = this.model.id;
@@ -69,10 +68,11 @@ var PieView = Backbone.View.extend({
                     if(item.get('order') != i+1)
                         item.save({order: i+1});
                 });
-                userCollection.sort();
             },
         });
         $(".sortable" ).disableSelection();
+
+
 
         userCollection.bind('all', this.render, this);
         userCollection.fetch();
