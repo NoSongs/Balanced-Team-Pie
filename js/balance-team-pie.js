@@ -6,16 +6,17 @@ var pieView;
 $(document).ready(function(){
 
 // Simperium configuration
+// bubbles@493.com
 var SIMPERIUM_OPTS = {
-    host            : '33.33.33.10',
-    port            : '9999',
-    auth_host       : '33.33.33.10:8888',
+    host            : 'api.simperium.com',
+    // port            : '9999',
+    // auth_host       : '33.33.33.10:8888',
     // client_id       : 'b112c2c457f946938be164e96f1cf979',
-    token        : 'c04614ff415648b0be9db2a80da7af1e',
+    token        : 'cf2104fd0d124dbdb28c84bfb309e561',
     stream_index    : true,
     update_delay    : 1,
 };
-var SIMPERIUM_APP_ID = 'app-specialists-793';
+var SIMPERIUM_APP_ID = 'ideal-whip-7c7';
 
 
 // User Model
@@ -113,5 +114,12 @@ function start_pie(pie_name) {
             start_pie(pie_name);
         }
     });
+
+    console.log('oh hi');
+    $('#slider').slider();
+
+     document.ontouchmove = function(e) {
+             e.preventDefault();
+                 };
 
 });

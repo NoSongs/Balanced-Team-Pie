@@ -7,6 +7,8 @@
 	<title>Balanced Team Pie - LUXr</title>
   
 	<!-- Included CSS Files -->
+	<link rel="stylesheet"
+        href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/black-tie/jquery-ui.css">
 	<link rel="stylesheet" href="css/jockstrap.css">
 
 	<!--[if lt IE 9]>
@@ -21,6 +23,8 @@
 
     <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
     <script src="http://code.jquery.com/ui/1.8.17/jquery-ui.min.js"></script>
+
+    <script type="text/javascript" src="js/jquery.ui.touch-punch.js"></script>
 
     <script type="text/javascript" src="js/underscore.js"></script>
     <script src="js/jquery.address-1.4.js"></script>
@@ -73,8 +77,14 @@
     <!-- splash-page end -->
 
     <!-- pie-page begin -->
-    <div class="page" id="pie-page" style="display:none">
+    <div class="page" id="pie-page" style="display:none; margin-left:20px;">
+
     I'm the pie page.
+
+    <br/>
+    <br/>
+    <div id="slider" style="width:200px;"></div>
+
     <div id="users">
         <br/>
         <br/>
@@ -84,6 +94,7 @@
         <ul id="user-list" class="sortable"></ul>
     </div>
     </div>
+
     <!-- pie-page end -->
 
 </div>
